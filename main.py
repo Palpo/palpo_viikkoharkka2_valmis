@@ -3,7 +3,6 @@
 import os
 import webapp2
 import jinja2
-import logging
 
 from models import Animal
 from google.appengine.ext import ndb
@@ -28,7 +27,6 @@ class NewAnimalHandler(webapp2.RequestHandler):
         name = self.request.get('animal')
         
         if name:
-            logging.info("New animal: %s " % name)
             animal = Animal(parent=PARENT, name=name)
             animal.put()
         
