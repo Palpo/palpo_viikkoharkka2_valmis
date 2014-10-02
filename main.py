@@ -5,9 +5,6 @@ import webapp2
 import jinja2
 import logging
 
-from models import Animal
-from google.appengine.ext import ndb
-
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
     extensions=['jinja2.ext.autoescape'],
@@ -16,7 +13,13 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        animals = [a.as_dict() for a in Animal.query()]
+        
+        # Placeholder:
+        animals = [{"id": 1, "name": "Leijona", "prey": ["Antilooppi"]},
+                   {"id": 2, "name": "Antilooppi", "prey": []}]
+        
+        # TODO
+        
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({"animals": animals}))
 
@@ -27,8 +30,8 @@ class NewAnimalHandler(webapp2.RequestHandler):
         
         if name:
             logging.info("New animal: %s " % name)
-            animal = Animal(name=name)
-            animal.put()
+            
+            # TODO
         
         self.redirect('/')
         
@@ -38,9 +41,9 @@ class NewPreyHandler(webapp2.RequestHandler):
         predator = self.request.get('predator')
         prey = self.request.get('prey')
         
-        animal = Animal.get_by_id(int(predator))
-        animal.prey.append(ndb.Key(Animal, int(prey)))
-        animal.put()
+        logging.info("%s eats %s" % (predator, prey))
+        
+        # TODO
         
         self.redirect('/')
         
