@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+  <head>
+  	<title>Viikkoharkka 2</title>
+  </head>
+  <body>
+    
+    <h3>Ravintoketju</h3>
+    
+    <form action="/newanimal" method="POST">
+	    <input type="text" name="animal" placeholder="Eläin" />
+	    <input type="submit" value="Lisää eläin">
+    </form>
+    
+    <table>
+    <tr><th>Eläin</th><th>Saaliseläimet</th><th></th></tr>
+    {% for animal in animals %}
+    	<tr>
+    	<td>{{animal.name}}</td>
+    	<td>
+    		{% for prey in animal.prey %}
+    			{{prey}}
+    		{% endfor %}
+    	</td>
+    	<td>
+	       	<form action="/newprey" method="POST">
+		    	<select name="prey">
+		    		{% for newprey in animals %}
+		    			<option  value="{{newprey.id}}">{{newprey.name}}</option>
+		    		{% endfor %}
+		    	</select>
+		    	<input type="hidden" name="predator" value="{{animal.id}}" />
+		    	<input type="submit" value="Lisää saaliseläin">
+		    </form>
+    	</td>
+    	</tr>
+    {% endfor %}
+    </table>
+    
+  </body>
+</html>
+{% endautoescape %}
