@@ -1,11 +1,8 @@
-Viikkoharjoitus 2
-=================
-
-Datastore
----------
+Viikkoharjoitus 2: Datastore
+----------------------------
 
 Datastore on App Enginen tarjoama tietokanta.
-Sitä voi Python- App Engine -sovelluksesta käyttä ndb-kirjaston avulla.
+Sitä voi Python- App Engine -sovelluksesta käyttää ndb-kirjaston avulla.
 Ndb-kirjastoon ja Datastoreen yleensäkin voi tutustua vaikka tästä linkistä:
 
 https://cloud.google.com/appengine/docs/python/ndb/
