@@ -13,12 +13,10 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-PARENT = ndb.Key("FoodChain", 1)
-
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        animals = [a.as_dict() for a in Animal.query(ancestor=PARENT)]
+        animals = [a.as_dict() for a in Animal.query()]
         template = JINJA_ENVIRONMENT.get_template('index.html')
         self.response.write(template.render({"animals": animals}))
 
@@ -29,7 +27,7 @@ class NewAnimalHandler(webapp2.RequestHandler):
         
         if name:
             logging.info("New animal: %s " % name)
-            animal = Animal(parent=PARENT, name=name)
+            animal = Animal(name=name)
             animal.put()
         
         self.redirect('/')
@@ -40,8 +38,8 @@ class NewPreyHandler(webapp2.RequestHandler):
         predator = self.request.get('predator')
         prey = self.request.get('prey')
         
-        animal = Animal.get_by_id(int(predator), parent=PARENT)
-        animal.prey.append(ndb.Key("FoodChain", 1, Animal, int(prey)))
+        animal = Animal.get_by_id(int(predator))
+        animal.prey.append(ndb.Key(Animal, int(prey)))
         animal.put()
         
         self.redirect('/')
